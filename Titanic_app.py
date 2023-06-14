@@ -13,10 +13,10 @@ st.set_page_config(page_title="DataSetTitanic",page_icon="⚓",layout= 'wide')
 st.set_option('deprecation.showPyplotGlobalUse', False) 
 
 # ------- SUBIR EL DF----------------------#
-df = pd.read_csv(r'C:/Users/fabia/OneDrive/Documents/Fabi/DataAnalisis/Bootcamp/samplerepo/Temario/Modulo1/12-Scripts y Streamlit/Streamlit/data/titanic.csv')
+df = pd.read_csv('data/titanic.csv')
 
 # ------- SUBIR LOGO----------------------#
-image = Image.open(r"C:/Users/fabia/OneDrive/Documents/Fabi/DataAnalisis/Bootcamp/samplerepo/Temario/Modulo1/12-Scripts y Streamlit/Streamlit/img/logo.png")
+image = Image.open("img/logo.png")
 
 st.image(image, caption='',width=400)
 
@@ -90,7 +90,7 @@ with tab1:
     """
 
    
-    df_original = pd.read_csv(r'C:/Users/fabia/OneDrive/Documents/Fabi/DataAnalisis/Bootcamp/samplerepo/Temario/Modulo1/12-Scripts y Streamlit/Streamlit/data/titanic_original.csv')
+    df_original = pd.read_csv('data/titanic_original.csv')
     st.subheader("Datos Nulos:")
    
     df_null = df_original.isnull().sum().reset_index()
