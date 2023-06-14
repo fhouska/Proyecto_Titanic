@@ -48,7 +48,7 @@ st.write(
 "\r\n"
 
 st.dataframe(data=df, width=None, height=200, 
-    use_container_width=False, hide_index=None, column_order=None, 
+    use_container_width=False, hide_index=True, column_order=None, 
     column_config=None)
 
 
@@ -60,7 +60,7 @@ st.dataframe(data=df, width=None, height=200,
 "\r\n"
 "\r\n"
 "\r\n"
-st.subheader('Agrupamos nuestro análisis en 4 etapas:')
+st.subheader('Agrupamos nuestro análisis en 5 etapas:')
 
 
 # Variables nuevas que necesito para que funcionen las gráficas.
@@ -94,7 +94,7 @@ with tab1:
     st.subheader("Datos Nulos:")
    
     df_null = df_original.isnull().sum().reset_index()
-    st.write(df_null)
+    st.write(df_null,height=100)
 
     st.write("Se identificaron 3 columnas con datos Nulos. Se procedió a analizar cuanto es el porcentaje de datos faltantes respecto al total.")
     st.write("      • Total null columna: Embarked   0.22 %")
@@ -105,7 +105,6 @@ with tab1:
     st.write("Y en la columna Embarked lo completamos por su moda.")
     st.subheader("Valores Duplicados:",anchor=None, help=None)
     st.write("No Se identificaron valores Duplicados en el DF.")
-    
 
 
 with tab2:
@@ -126,12 +125,11 @@ with tab2:
     st.plotly_chart(fig1)   
 
     st.write("Esta es una gráfica de Mapa de Calor en funcion de la variable: Survived. ")
-    st.write("""Esta es una gráfica de mapa de calor de correlación en función de la variable: Survived. 
-    Los colores más oscuros indican una correlación más fuerte, mientras que los colores más claros indican una correlación más débil o nula.
-    Se puede observar una correlación negativa entre las variables Fare y Pclass, esto significa que podría estar relacionadas con menor probabilidad de supervivencia.
-    El resto de las variables no presentan una correlación significativa con respecto a Survived."""
+    st.write("""Los colores más oscuros indican una correlación más fuerte, mientras que los colores más claros indican una correlación más débil o nula.
+Se puede observar que no hay una correlación fuerte entre las variables esto significa que podrían no estar relacionadas con la probabilidad de supervivencia.
+"""
     )
-    
+  
 
 with tab3:
     st.write("""En esta gráfica tipo Pie muestra el porcentaje de los pasajeros que han sobrevivido y no sobrevivido al accidente del Titanic.
@@ -142,7 +140,10 @@ with tab3:
     fig2 = px.pie(Sobrevivientes, values='PassengerId', names='Survived_Indicator', template="plotly_dark", title="Total Pasajeros",hole=0.3,color_discrete_sequence = colorx
     )
     st.plotly_chart(fig2)
-
+    "\r\n"
+    "\r\n"
+    "\r\n"
+    "\r\n"
     
 
 # ANALISIS DE SOBREVIVIENTES SEGUN EL EDAD
@@ -167,12 +168,14 @@ with tab3:
     barmode='group' 
     )
     st.plotly_chart(fig3)
-
+    "\r\n"
+    "\r\n"
+    "\r\n"
+    "\r\n"
 
 # ANALISIS DE SOBREVIVIENTES SEGUN EL TITULO
-    """Este histograma muestra la cantidad de pasajeros en cada categoría de título que tenía dentro de la columna “Name”. Observamos que la mayoría de los pasajeros tienen títulos comunes como “Miss”, “Mrs.” y “Master”. Con estos títulos podemos ver el género y el estado civil de los pasajeros. 
-    Podemos ver que la categoría más numerosa es “Mr.” Esto sugiere que la mayoría de los pasajeros eran hombres
-    El histograma revela que la categoría de título más numerosa es 'Mr.', seguida de 'Miss' y 'Mrs.'. Esto sugiere que la mayoría de los pasajeros son adultos masculinos y mujeres solteras o casadas. Por otro lado, los títulos menos comunes están asociados a un menor número de pasajeros, lo que indica que corresponden a categorías más específicas.
+    """Este histograma muestra la cantidad de pasajeros en cada categoría de título que tenía dentro de la columna “Name”. Observamos que la mayoría de los pasajeros tienen títulos comunes como “Miss”, “Mrs.” y “Miss”. Con estos títulos podemos ver el género y el estado civil de los pasajeros. 
+    Podemos observar que la categoría más numerosa es “Mr.” Esto sugiere que la mayoría de los pasajeros eran hombres
     """
 
 # Aplicamos la función para generar una nueva columna con el título
@@ -192,6 +195,10 @@ with tab3:
         barmode='group' 
     )
     st.plotly_chart(fig4)
+    "\r\n"
+    "\r\n"
+    "\r\n"
+    "\r\n"
 
 # ANALISIS DE SOBREVIVIENTES SEGUN EL GÉNERO
     """El histograma muestra la proporción de pasajeros masculinos y femeninos que sobrevivieron y no sobrevivieron.
@@ -209,14 +216,17 @@ with tab3:
         yaxis=dict(title='Cantidad')
         )
     st.plotly_chart(fig5)
+    "\r\n"
+    "\r\n"
+    "\r\n"
+    "\r\n"
 
 # ANALISIS EN CUANTO A VIAJAR SOLO O ACOMPAÑADO
 
     """El histograma muestra la distribución de pasajeros según si viajaban con familia o solos y la proporción de sobrevivientes y no sobrevivientes.
-    Podemos ver que la proporción de pasajeros que viajaban con familia y sobrevivieron es menor en comparación con los que sobrevivieron. Por otro lado, la proporción de pasajeros que viajaban solos y sobrevivieron es mayor en comparación con los que no sobrevivieron.
+    Podemos ver que la proporción de pasajeros que viajaban con familia y sobrevivieron es menor en comparación con los que no sobrevivieron. Por otro lado, la proporción de pasajeros que viajaban solos y sobrevivieron es mayor en comparación con los que no sobrevivieron.
     Estos hallazgos sugieren que viajar con familia podría haber sido negativo en términos de posibilidades de supervivencia durante el accidente del Titanic. Es posible que aquellos que estaban acompañados por familiares prioricen ayudar y salvar a sus familiares antes que a sí mismos. 
     """
-
 
 # Creamos una nueva columna con la suma de las columnas SibSp y Parch para saber si viajaban solos con con Familares.
     df['With_Family'] = df['SibSp'] + df['Parch']
@@ -226,7 +236,7 @@ with tab3:
     df.loc[df.With_Family == 0, 'Alone'] = 1
     df['Alone'] = df['Alone'].map({1: 'With_Family', 0: 'Alone'})
 
-    Compania = df[['Survived_Indicator','Alone','With_Family']].value_counts().reset_index()
+    Compania = df[['Survived_Indicator','Alone']].value_counts().reset_index()
    
     fig6 = px.bar(Compania, x='Alone', y='count', color='Survived_Indicator',
                 color_discrete_sequence=colorx, opacity=0.85,template='plotly_dark')
@@ -237,7 +247,10 @@ with tab3:
         )
 
     st.plotly_chart(fig6)
-    
+    "\r\n"
+    "\r\n"
+    "\r\n"
+    "\r\n"
 
 
 with tab4:
@@ -246,12 +259,14 @@ with tab4:
 
 # ANALISIS por clase
 
-    """Distribución de sobrevivientes por clase: Podemos observar que la clase 1 tiene la mayor cantidad de sobrevivientes, seguida de la clase 3 y luego la clase 2. Esto sugiere que hubo una mayor proporción de pasajeros de la clase 1 que lograron sobrevivir en comparación con las otras clases.
-    Diferencias significativas entre las clases: Existe una marcada diferencia en la cantidad de sobrevivientes entre las diferentes clases. La clase 1 tiene un número considerablemente mayor de sobrevivientes en comparación con las clases 2 y 3. Esto puede ser atribuido a varios factores, como la ubicación de las cabinas en el barco, el acceso a los botes salvavidas y posiblemente la priorización de los pasajeros de primera clase durante el rescate.
-    """
+    """Existe una notoria diferencia en la cantidad de sobrevivientes entre las diferentes clases. """
+    """La clase 1 tiene un número considerablemente mayor de sobrevivientes en comparación con las clases 2 y 3. Esto puede ser atribuido a varios factores, como la ubicación 
+    de las cabinas en el barco, el acceso a los botes salvavidas y posiblemente la priorización de los pasajeros de primera clase en la asignación de botes salvavidas y/o 
+    medidas de salvación que se hayan considerado."""
+    
     # Agrupar los datos por Survived - Pclass - Sex
-    experience_job_ds = df.groupby(['Survived_Indicator', 'Pclass','Sex','Embarked']).size().reset_index(name='Count')
-    fig9 = px.treemap(experience_job_ds, path=['Survived_Indicator', 'Pclass','Sex','Embarked'], values='Count', 
+    experience_job_ds = df.groupby(['Survived_Indicator', 'Pclass',]).size().reset_index(name='Count')
+    fig9 = px.treemap(experience_job_ds, path=['Survived_Indicator', 'Pclass'], values='Count', 
                     color_discrete_sequence=colorx, template='plotly_dark')
 
     fig9.update_layout(
@@ -262,17 +277,18 @@ with tab4:
         showlegend=True
     )
     st.plotly_chart(fig9)
+    "\r\n"
+    "\r\n"
+    "\r\n"
+    "\r\n"
 
-    fig10 = px.histogram(df, x='Embarked', color='Pclass', barmode='stack', nbins=25,
-                   color_discrete_sequence=colorx, opacity=0.85,template='plotly_dark')
+# ANALISIS por lugar de Embarque
 
-    fig10.update_layout(
-        title='Distribución de pasajeros segun donde se embarcaron y su categoría',
-        xaxis=dict(title='Lugar de Embarque'),
-        yaxis=dict(title='Cantidad'),
-        )
-    st.plotly_chart(fig10)
+    """    Este mapa de calor representa a través de los colores la intensidad de la relación entre el lugar de embarque y los sobrevivientes.
+    Se puede observar que existe una mayor tendencia de no sobrevivir si el lugar de embarque ha sido el S y una tendencia a sobrevivir si se ha embarcado en el puerto Q.
 
+    Si juntamos este mapa de calor con el histograma de cómo están compuestas las clases tiene sentido ya que la mayoría de las personas se han embarcado en el puerto S.
+    """
     fig11 = px.density_heatmap (df, x="Embarked", y="Survived_Indicator", marginal_x="histogram", marginal_y="rug",
                           template='plotly_dark',color_continuous_scale= colorx)
 
@@ -281,8 +297,44 @@ with tab4:
         xaxis=dict(title='Lugar de Embarque'),
         yaxis=dict(title=' ')
         )
-    st.plotly_chart(fig11)
+    st.plotly_chart(fig11)    
+
+    "\r\n"
+    "\r\n"
+
+    st.write(
+        " * 'S': Southampton, Inglaterra" "\r\n"
+        " * 'C': Cherbourg, Francia" "\r\n"
+        " * 'Q': Queenstown, Irlanda" "\r\n")
+
+    fig10 = px.histogram(df, x='Embarked', color='Pclass', barmode='stack', nbins=25,
+                   color_discrete_sequence=colorx, opacity=0.85,template='plotly_dark')
+
+    fig10.update_layout(
+        title='Distribución de pasajeros según donde se embarcaron y su categoría',
+        xaxis=dict(title='Lugar de Embarque'),
+        yaxis=dict(title='Cantidad'),
+        )
+    st.plotly_chart(fig10)
+
 
     with tab5:
+        st.subheader("Conclusiones")
+        st.write("Podemos ver que la proporción de pasajeros que sobrevivieron al desastre del Titanic fue inferior a la proporción de pasajeros que no sobrevivieron." 
+             "Solo un 38% de los pasajeros sobrevivieron.""\r\n")
+    
+        st.write("En la Grafica de la distribución de edades de los pasajeros muestra que la mayoría de ellos se encontraban en el rango de 20 a 30 años. Sin embargo," 
+             "cuando analizamos las correlaciones no encontramos una correlación entre estas dos variables (Age, Survived).")
+        st.write("En cuanto al género parece estar asociado a la supervivencia, ya que pudimos ver en la gráfica de distribución por género, que la mayoría de mujeres" 
+                 " ha sobrevivido en comparación con los hombres. Esto puede deberse a la prioridad dada en las mujeres y niños durante la asignación de botes salvavidas" 
+                 "y durante el rescate.")
+        st.write("Los pasajeros que viajaban solos tenían mayor probabilidad de sobrevivir en comparación con aquellos que viajaban con familiares a bordo. Esto puede "
+                 "deberse al priorizar buscar y salvar a sus familiares en lugar de a si mismos, o en la toma de decisiones en momentos de emergencia.")
+        st.write("Se puede ver en la gráfica de sobrevivientes que según el lugar de empaque los pasajeros que se embarcaron en Queenstown: “Q” tuvieron mayor probabilidad"
+                 " de sobrevivir en comparación a los que se embarcaron en Cherboug: “C”  y Southampton: “S”. Siendo este último el que muestra menor probabilidad de sobrevivir.")
+        st.write(" Y para finalizar podemos observar que los pasajeros que viajaban en la primera clase tienen una mayor proporción que el resto de las clases. Esto puede indicar "
+                 "que se hayan priorizado al momento de asignar los botes o al lugar donde se encontraban las cabinas. Esto puede indicar que puede haber sido un factor determinante"
+                 " en su probabilidad de sobrevivir.")
 
-        st.title("DATA SET TITANIC")
+
+
