@@ -16,7 +16,7 @@ st.set_option('deprecation.showPyplotGlobalUse', False)
 df = pd.read_csv('data/titanic.csv')
 
 # ------- SUBIR LOGO----------------------#
-image = Image.open("img/logo.png")
+image = Image.open('img/logo.png')
 
 st.image(image, caption='',width=400)
 
